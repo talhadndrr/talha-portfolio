@@ -1,69 +1,535 @@
+"use client";
+
 import Image from "next/image";
+import { motion, useScroll, useSpring } from "motion/react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Code2,
+  Database,
+  ExternalLink,
+  Mail,
+  Sparkles,
+} from "lucide-react";
+import type { ReactNode } from "react";
+
+const skills = [
+  { name: "OOP", description: "Nesne Yönelimli Programlama" },
+  { name: "HTML5", description: "Web arayüzlerinin yapısı" },
+  { name: "CSS", description: "Modern ve responsive tasarım" },
+  { name: "JavaScript", description: "Dinamik web uygulamaları" },
+  { name: "PHP", description: "Sunucu taraflı web geliştirme" },
+  { name: "Python", description: "Programlama ve otomasyon" },
+  { name: "C", description: "Temel programlama" },
+  { name: "C#", description: "Nesne yönelimli uygulamalar" },
+  { name: "C++", description: "Programlama ve algoritmalar" },
+  { name: "Microsoft SQL Server", description: "Veritabanı yönetimi" },
+];
+
+const projects = [
+  {
+    number: "01",
+    title: "Artı Reklam",
+    category: "Kurumsal Web Sitesi",
+    description:
+      "Reklam, tabela ve kurumsal tanıtım hizmetlerini modern bir tasarımla sergileyen, hızlı ve mobil uyumlu kurumsal web sitesi.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    liveUrl: "https://artireklam-site.vercel.app/",
+    image: "/arti-reklam-proje.webp",
+  },
+];
+
+const navigation = [
+  { label: "Hakkımda", href: "#about" },
+  { label: "Deneyim", href: "#experience" },
+  { label: "Yetenekler", href: "#skills" },
+  { label: "Projeler", href: "#projects" },
+  { label: "İletişim", href: "#contact" },
+];
+
+function Reveal({
+  children,
+  delay = 0,
+}: {
+  children: ReactNode;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 35 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{
+        duration: 0.65,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="relative min-h-screen overflow-hidden bg-[#060608] text-white selection:bg-violet-500 selection:text-white">
+      <motion.div
+        style={{ scaleX: progress }}
+        className="fixed left-0 top-0 z-[100] h-1 w-full origin-left bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-400"
+      />
+
+      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:70px_70px]" />
+      <div className="pointer-events-none fixed -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-violet-700/15 blur-[130px]" />
+      <div className="pointer-events-none fixed -right-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-blue-700/15 blur-[130px]" />
+
+      <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-4 md:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/10 bg-black/60 px-5 py-3 shadow-2xl shadow-black/20 backdrop-blur-xl md:px-7">
+          <a href="#home" className="flex items-center gap-3 font-semibold">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-sm font-bold text-black">
+              TD
+            </span>
+            <span className="hidden sm:block">Talha Dündar</span>
+          </a>
+
+          <div className="hidden items-center gap-6 text-sm text-slate-400 lg:flex">
+            {navigation.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="transition duration-300 hover:text-white"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+
+          <a
+            href="#contact"
+            className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition duration-300 hover:scale-105 hover:bg-violet-200"
+          >
+            İletişim
+          </a>
+        </div>
+      </nav>
+
+      <section
+        id="home"
+        className="relative flex min-h-screen items-center px-5 pb-16 pt-32 md:px-8"
+      >
+        <div className="mx-auto w-full max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-4 py-2 text-sm text-violet-300"
+          >
+            <Sparkles className="h-4 w-4" />
+            Yeni projeler geliştirmeye devam ediyorum
+          </motion.div>
+
+          <p className="mb-5 text-sm font-medium uppercase tracking-[0.4em] text-slate-500">
+            Yazılım geliştirici · YBS öğrencisi
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+          <h1 className="max-w-6xl text-5xl font-semibold leading-[0.95] tracking-[-0.055em] sm:text-7xl md:text-8xl lg:text-[7.5rem]">
+            <motion.span
+              initial={{ opacity: 0, y: 65 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="block"
+            >
+              Dijital fikirleri
+            </motion.span>
+
+            <motion.span
+              initial={{ opacity: 0, y: 65 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="block bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent"
+            >
+              deneyime
+            </motion.span>
+
+            <motion.span
+              initial={{ opacity: 0, y: 65 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="block"
+            >
+              dönüştürüyorum.
+            </motion.span>
+          </h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.65 }}
+            className="mt-12 flex flex-col justify-between gap-9 md:flex-row md:items-end"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <p className="max-w-xl text-lg leading-8 text-slate-400 md:text-xl">
+              Merhaba, ben Hüseyin Talha Dündar. Web geliştirme, masaüstü
+              programlama ve veritabanı teknolojileri üzerine kendimi
+              geliştiriyor, kullanıcı odaklı yazılım projeleri üretiyorum.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="#projects"
+                className="flex items-center gap-3 rounded-full bg-white px-7 py-4 font-semibold text-black transition duration-300 hover:-translate-y-1 hover:bg-violet-200"
+              >
+                Projeleri keşfet
+                <ArrowDown className="h-5 w-5" />
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/h%C3%BCseyin-talha-d%C3%BCndar-71a036337/"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-semibold backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-violet-400/60 hover:bg-violet-500/10"
+              >
+                LinkedIn
+                <ExternalLink className="h-5 w-5" />
+              </a>
+            </div>
+          </motion.div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section
+        id="about"
+        className="relative border-t border-white/10 px-5 py-28 md:px-8 md:py-36"
+      >
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.7fr_1.3fr]">
+          <Reveal>
+            <div>
+              <span className="font-mono text-sm text-violet-400">01 /</span>
+              <p className="mt-3 text-sm uppercase tracking-[0.35em] text-slate-500">
+                Hakkımda
+              </p>
+            </div>
+          </Reveal>
+
+          <div>
+            <Reveal delay={0.1}>
+              <h2 className="text-4xl font-medium leading-tight tracking-tight md:text-6xl">
+                Yazılımı, tasarımı ve iş süreçlerini bir araya getiriyorum.
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="mt-10 grid gap-8 text-lg leading-8 text-slate-400 md:grid-cols-2">
+                <p>
+                  Yönetim Bilişim Sistemleri alanında eğitim alırken web
+                  geliştirme, nesne yönelimli programlama, veritabanı sistemleri
+                  ve yazılım teknolojileri üzerine çalışmalar yapıyorum.
+                </p>
+
+                <p>
+                  HTML5, CSS, JavaScript, PHP, Python, C, C# ve C++ gibi
+                  teknolojileri kullanarak farklı yazılım projeleri geliştiriyor
+                  ve kendimi sürekli geliştirmeye devam ediyorum.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="mt-14 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6">
+                  <p className="text-3xl font-semibold">1+</p>
+                  <p className="mt-2 text-sm text-slate-500">Yayınlanan proje</p>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6">
+                  <p className="text-3xl font-semibold">10+</p>
+                  <p className="mt-2 text-sm text-slate-500">Yazılım teknolojisi</p>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-6">
+                  <p className="text-3xl font-semibold">∞</p>
+                  <p className="mt-2 text-sm text-slate-500">Öğrenme isteği</p>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="experience"
+        className="relative border-t border-white/10 px-5 py-28 md:px-8 md:py-36"
+      >
+        <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.7fr_1.3fr]">
+          <Reveal>
+            <div>
+              <span className="font-mono text-sm text-violet-400">02 /</span>
+              <p className="mt-3 text-sm uppercase tracking-[0.35em] text-slate-500">
+                Deneyim
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <article className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-7 transition duration-300 hover:-translate-y-2 hover:border-violet-500/40 md:p-10">
+              <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-violet-600/15 blur-[80px]" />
+
+              <div className="relative">
+                <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
+                  <div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-4 py-2 text-sm text-violet-300">
+                      <BriefcaseBusiness className="h-4 w-4" />
+                      Staj deneyimi
+                    </div>
+
+                    <h3 className="mt-6 text-3xl font-semibold md:text-5xl">
+                      Bilgi İşlem Stajyeri
+                    </h3>
+
+                    <p className="mt-3 text-xl text-slate-400">
+                      Afyonkarahisar Valiliği
+                    </p>
+                  </div>
+
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
+                    <Code2 className="h-7 w-7 text-violet-400" />
+                  </div>
+                </div>
+
+                <p className="mt-9 max-w-3xl border-t border-white/10 pt-8 text-lg leading-8 text-slate-400">
+                  Bilgi işlem birimindeki teknik süreçleri, kurumsal sistemleri
+                  ve bilişim altyapısını gözlemleyerek uygulamalı deneyim kazandım.
+                </p>
+              </div>
+            </article>
+          </Reveal>
+        </div>
+      </section>
+
+      <section
+        id="skills"
+        className="relative border-y border-white/10 bg-white/[0.015] px-5 py-28 md:px-8"
+      >
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <div className="text-center">
+              <span className="font-mono text-sm text-violet-400">03 /</span>
+              <p className="mt-3 text-sm uppercase tracking-[0.35em] text-slate-500">
+                Yetenekler
+              </p>
+              <h2 className="mt-5 text-4xl font-medium md:text-6xl">
+                Kullandığım teknolojiler
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {skills.map((skill, index) => (
+              <motion.article
+                key={skill.name}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.45,
+                  delay: Math.min(index * 0.04, 0.35),
+                }}
+                whileHover={{ y: -6 }}
+                className="group rounded-3xl border border-white/10 bg-white/[0.035] p-6 transition-colors duration-300 hover:border-violet-400/40 hover:bg-violet-500/[0.07]"
+              >
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <h3 className="text-xl font-semibold">{skill.name}</h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {skill.description}
+                    </p>
+                  </div>
+
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-violet-400">
+                    {skill.name === "Microsoft SQL Server" ? (
+                      <Database className="h-5 w-5" />
+                    ) : (
+                      <Code2 className="h-5 w-5" />
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="projects"
+        className="relative px-5 py-28 md:px-8 md:py-36"
+      >
+        <div className="mx-auto max-w-7xl">
+          <Reveal>
+            <div className="flex flex-col justify-between gap-7 md:flex-row md:items-end">
+              <div>
+                <span className="font-mono text-sm text-violet-400">04 /</span>
+                <p className="mt-3 text-sm uppercase tracking-[0.35em] text-slate-500">
+                  Seçili çalışmalar
+                </p>
+                <h2 className="mt-5 max-w-3xl text-4xl font-medium leading-tight md:text-7xl">
+                  Geliştirdiğim projeler
+                </h2>
+              </div>
+
+              <p className="max-w-sm leading-7 text-slate-400">
+                Tasarım, performans ve kullanıcı deneyimini birlikte düşünerek
+                geliştirdiğim çalışmalar.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="mt-16 max-w-4xl">
+            {projects.map((project, index) => (
+              <motion.article
+                key={project.number}
+                initial={{ opacity: 0, y: 55 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.65, delay: index * 0.1 }}
+                whileHover={{ y: -8 }}
+                className="group overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-3 shadow-2xl shadow-black/20 transition-colors hover:border-violet-500/40"
+              >
+                <div className="relative aspect-[16/8] overflow-hidden rounded-[1.5rem] bg-black">
+                  <Image
+                    src={project.image}
+                    alt="Artı Reklam web sitesi ana sayfa görünümü"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 896px"
+                    className="object-cover object-top transition duration-700 group-hover:scale-[1.03]"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+
+                  <div className="absolute left-5 top-5 flex flex-wrap items-center gap-2 md:left-6 md:top-6">
+                    <span className="rounded-full border border-white/15 bg-black/60 px-3 py-1.5 font-mono text-xs text-white backdrop-blur-md">
+                      {project.number}
+                    </span>
+
+                    <span className="rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-xs text-white/80 backdrop-blur-md">
+                      {project.category}
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-5 md:bottom-7 md:left-7 md:right-7">
+                    <h3 className="text-3xl font-semibold text-white md:text-5xl">
+                      {project.title}
+                    </h3>
+
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/50 backdrop-blur-md">
+                      <ArrowUpRight className="h-5 w-5" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 md:p-8">
+                  <p className="max-w-2xl text-lg leading-8 text-slate-400">
+                    {project.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.technologies.map((technology) => (
+                      <span
+                        key={technology}
+                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-300"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-8 flex items-center justify-between border-t border-white/10 pt-6 font-medium"
+                  >
+                    <span>Projeyi görüntüle</span>
+                    <ArrowUpRight className="h-5 w-5 transition duration-300 group-hover:rotate-45 group-hover:text-violet-400" />
+                  </a>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="relative px-5 pb-10 md:px-8">
+        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.035] p-8 backdrop-blur-xl md:p-16">
+          <div className="pointer-events-none absolute -right-32 -top-32 h-80 w-80 rounded-full bg-violet-600/25 blur-[110px]" />
+
+          <div className="relative">
+            <Reveal>
+              <span className="font-mono text-sm text-violet-400">05 /</span>
+
+              <h2 className="mt-6 max-w-5xl text-5xl font-medium leading-[0.95] tracking-tight md:text-8xl">
+                Birlikte güzel bir proje geliştirelim.
+              </h2>
+
+              <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-400">
+                Proje fikirleri, iş birlikleri ve yazılım çalışmaları için
+                benimle iletişime geçebilirsin.
+              </p>
+
+              <div className="mt-12 flex flex-wrap gap-4">
+                <a
+                  href="mailto:talhadiletisim@gmail.com"
+                  className="flex items-center gap-3 rounded-full bg-white px-7 py-4 font-semibold text-black transition duration-300 hover:-translate-y-1 hover:bg-violet-200"
+                >
+                  <Mail className="h-5 w-5" />
+                  E-posta gönder
+                </a>
+
+                <a
+                  href="https://github.com/Talhadndrr"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-semibold transition duration-300 hover:-translate-y-1 hover:border-violet-400/60 hover:bg-violet-500/10"
+                >
+                  <Code2 className="h-5 w-5" />
+                  GitHub
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/h%C3%BCseyin-talha-d%C3%BCndar-71a036337/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-semibold transition duration-300 hover:-translate-y-1 hover:border-blue-400/60 hover:bg-blue-500/10"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  LinkedIn
+                </a>
+              </div>
+
+              <div className="mt-12 border-t border-white/10 pt-8">
+                <a
+                  href="mailto:talhadiletisim@gmail.com"
+                  className="text-lg text-slate-400 transition hover:text-violet-300"
+                >
+                  talhadiletisim@gmail.com
+                </a>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+
+        <footer className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-3 py-10 text-sm text-slate-600 sm:flex-row">
+          <p>© 2026 Hüseyin Talha Dündar</p>
+          <p>Next.js ve Motion ile geliştirildi.</p>
+        </footer>
+      </section>
+    </main>
   );
 }
