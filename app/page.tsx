@@ -114,7 +114,7 @@ export default function Home() {
 
           <a
             href="#contact"
-            className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition duration-300 hover:scale-105 hover:bg-violet-200"
+            className="rounded-full border border-white/15 bg-white/5 px-5 py-2 text-sm font-semibold text-white transition duration-300 hover:scale-105 hover:border-violet-400/60 hover:bg-violet-500/10"
           >
             İletişim
           </a>
@@ -184,7 +184,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <a
                 href="#projects"
-                className="flex items-center gap-3 rounded-full bg-white px-7 py-4 font-semibold text-black transition duration-300 hover:-translate-y-1 hover:bg-violet-200"
+               className="flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-7 py-4 font-semibold text-white transition duration-300 hover:-translate-y-1 hover:border-violet-400/60 hover:bg-violet-500/10"
               >
                 Projeleri keşfet
                 <ArrowDown className="h-5 w-5" />
@@ -484,13 +484,15 @@ export default function Home() {
               </p>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <a
-                  href="mailto:talhadiletisim@gmail.com"
-                  className="flex items-center gap-3 rounded-full bg-white px-7 py-4 font-semibold text-black transition duration-300 hover:-translate-y-1 hover:bg-violet-200"
-                >
-                  <Mail className="h-5 w-5" />
-                  E-posta gönder
-                </a>
+               <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=talhadiletisim@gmail.com"
+  target="_blank"
+  rel="noreferrer"
+  className="flex items-center gap-3 rounded-full border border-violet-400/30 bg-violet-500/10 px-7 py-4 font-semibold text-violet-100 transition duration-300 hover:-translate-y-1 hover:border-violet-400/70 hover:bg-violet-500/20"
+>
+  <Mail className="h-5 w-5 text-violet-300" />
+  E-posta gönder
+</a>
 
                 <a
                   href="https://github.com/Talhadndrr"
